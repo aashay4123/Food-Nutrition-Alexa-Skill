@@ -1,7 +1,12 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "change me",
+      "invocationName": "food nutrition",
+      "modelConfiguration": {
+        "fallbackIntentSensitivity": {
+          "level": "LOW"
+        }
+      },
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -16,29 +21,71 @@
           "samples": []
         },
         {
-          "name": "HelloWorldIntent",
-          "slots": [],
-          "samples": [
-            "hello",
-            "how are you",
-            "say hi world",
-            "say hi",
-            "hi",
-            "say hello world",
-            "say hello"
-          ]
-        },
-        {
           "name": "AMAZON.NavigateHomeIntent",
           "samples": []
         },
         {
           "name": "AMAZON.FallbackIntent",
           "samples": []
+        },
+        {
+          "name": "GetNutritionIntent",
+          "slots": [
+            {
+              "name": "FoodItem",
+              "type": "AMAZON.Food",
+              "multipleValues": {
+                "enabled": true
+              }
+            }
+          ],
+          "samples": [
+            "about {FoodItem}",
+            "nutrients {FoodItem}",
+            "get nutrients of {FoodItem}",
+            "tell me about {FoodItem}",
+            "describe {FoodItem}"
+          ]
+        },
+        {
+          "name": "GetMoreNutrition",
+          "slots": [],
+          "samples": ["more", "sure", "okay ", "yes", "tell me more"]
         }
       ],
       "types": []
-    }
-  },
-  "version": "1"
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "GetNutritionIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "FoodItem",
+              "type": "AMAZON.Food",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.778415923403.1551661135006"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.778415923403.1551661135006",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "please tell me the food item to describe"
+          }
+        ]
+      }
+    ]
+  }
 }
